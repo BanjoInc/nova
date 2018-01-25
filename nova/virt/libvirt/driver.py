@@ -4289,6 +4289,9 @@ class LibvirtDriver(driver.ComputeDriver):
             hv.vapic = True
             guest.features.append(hv)
 
+        if virt_type in ("qemu", "kvm"):
+            guest.features.append(vconfig.LibvirtConfigGuestFeatureKvmHidden())
+
     def _check_number_of_serial_console(self, num_ports):
         virt_type = CONF.libvirt.virt_type
         if (virt_type in ("kvm", "qemu") and
